@@ -213,7 +213,8 @@ if has("gui_running") || $TERM == "xterm-256color"
   set background=dark " light
   let base16colorspace=256 " Access colors present in 256 colorspace
   " colorscheme base16-default
-  colorscheme base16-ocean
+  "colorscheme base16-ocean
+  colorscheme monokai
 else
   let g:CSApprox_loaded = 0
 endif
