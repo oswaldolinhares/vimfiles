@@ -74,7 +74,7 @@ endfunction
 
 " CtrlP
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_working_path_mode = 'c' "Opção C  - current directory
+let g:ctrlp_working_path_mode = 0 "Opção C  - current directory
 "set wildignore+=*.so,*.swp,*.zip
 let g:ctrlp_custom_ignore = 'tmp$\|.git$\|\.hg$\|\.hg$\|\.svn$\|\.rvm$\|\vendor$'
 "let g:ctrlp_custom_ignore = {
