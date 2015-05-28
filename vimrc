@@ -74,13 +74,14 @@ endfunction
 
 " CtrlP
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_working_path_mode = 2
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-  \ 'file': '\.exe$\|\.so$\|\.dll$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
+let g:ctrlp_working_path_mode = 'c' "Opção C  - current directory
+"set wildignore+=*.so,*.swp,*.zip
+let g:ctrlp_custom_ignore = 'tmp$\|.git$\|\.hg$\|\.hg$\|\.svn$\|\.rvm$\|\vendor$'
+"let g:ctrlp_custom_ignore = {
+"  \ 'dir':  '\.git$\|\.hg$\|\.svn$|\.tmp',
+"  \ 'file': '\.exe$\|\.so$\|\.dll$|\.cache$',
+"  \ 'link': 'some_bad_symbolic_links',
+"  \ }
 
 " vim-airline
 set laststatus=2
