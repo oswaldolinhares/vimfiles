@@ -456,3 +456,8 @@ au BufNewFile,BufRead *.less       set filetype=css
 au BufNewFile,BufRead bash_profile set filetype=sh
 au BufNewFile,BufRead Capfile      set filetype=ruby
 au BufNewFile,BufRead *.hbs        set filetype=html
+
+" ┌───────────────────────────────────┐
+" │        Atalhos by Oswaldo         │
+" └───────────────────────────────────┘
+
