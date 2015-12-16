@@ -1,17 +1,15 @@
-" ┌───────────────────────────────────┐
-" │      VimFiles by Lucas Caton      │
-" ├───────────────────────────────────┤
-" │ http://lucascaton.com.br/         │
-" │ http://blog.lucascaton.com.br/    │
-" │ http://www.twitter.com/lucascaton │
-" └───────────────────────────────────┘
-
+" ┌─────────────────────────────────────────┐
+" │         VimFiles by Lucas Caton         │
+" ├─────────────────────────────────────────┤
+" │ http://lucascaton.com.br/               │
+" | https://github.com/lucascaton/vimfiles/ |
+" └─────────────────────────────────────────┘
 
 " ┌───────────────────────────────────┐
 " │              Vundle               │
 " └───────────────────────────────────┘
 
-set nocompatible
+set nocompatible " Unleash all Vim power
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
@@ -20,9 +18,11 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 
 Plugin 'Lokaltog/vim-easymotion'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'bling/vim-airline'
 Plugin 'chriskempson/base16-vim'
 Plugin 'danro/rename.vim'
+Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'gorkunov/smartpairs.vim'
 Plugin 'henrik/vim-ruby-runner'
@@ -57,6 +57,19 @@ filetype plugin indent on
 
 " NERDTree
 nmap <F2> :NERDTreeToggle<CR>
+let NERDTreeShowHidden = 1
+let NERDTreeIgnore = [
+  \'\.DS_Store$',
+  \'\.bundle$',
+  \'\.capistrano$',
+  \'\.git$',
+  \'\.keep$',
+  \'\.routes$',
+  \'\.sass-cache/$',
+  \'\.swo$',
+  \'\.swp$',
+  \'tags$'
+\]
 
 " Tabular
 inoremap <silent> <Bar> <Bar><Esc>:call <SID>align()<CR>a
@@ -72,20 +85,29 @@ function! s:align()
   endif
 endfunction
 
+if exists(":Tabularize")
+  nmap <Leader>t= :Tabularize /=<CR>
+  vmap <Leader>t= :Tabularize /=<CR>
+  nmap <Leader>t> :Tabularize /=><CR>
+  vmap <Leader>t> :Tabularize /=><CR>
+  nmap <Leader>t: :Tabularize /:\zs<CR>
+  vmap <Leader>t: :Tabularize /:\zs<CR>
+endif
+
 " CtrlP
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_working_path_mode = 0 "Opção C  - current directory
-"set wildignore+=*.so,*.swp,*.zip
-let g:ctrlp_custom_ignore = 'tmp$\|.git$\|\.hg$\|\.hg$\|\.svn$\|\.rvm$\|\vendor$'
-"let g:ctrlp_custom_ignore = {
-"  \ 'dir':  '\.git$\|\.hg$\|\.svn$|\.tmp',
-"  \ 'file': '\.exe$\|\.so$\|\.dll$|\.cache$',
-"  \ 'link': 'some_bad_symbolic_links',
-"  \ }
+let g:ctrlp_working_path_mode = 2
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+  \ 'file': '\.exe$\|\.so$\|\.dll$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
 
 " vim-airline
 set laststatus=2
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#syntastic#enabled = 1
 
 " ┌───────────────────────────────────┐
 " │             Settings              │
@@ -150,8 +172,8 @@ vmap > >gv
 " inoremap <Right> <nop>
 
 " Highlight long lines
-" let w:m2=matchadd('Search',   '\%>80v.\+', -1)
-" let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" let w:m2=matchadd('Search',   '\%>100v.\+', -1)
+" let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
 
 " Relative line numbers in normal mode
 " set rnu
@@ -173,6 +195,13 @@ set nobackup
 set noswapfile
 
 " Syntastic configs
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_warning_symbol = '⚠'
+let g:syntastic_auto_loc_list=1
+let g:syntastic_aggregate_errors = 1
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 let g:syntastic_mode_map={ 'mode': 'active',
@@ -189,6 +218,8 @@ let g:syntastic_mode_map={ 'mode': 'active',
 
 " Fonts for Mac
 set guifont=Monaco\ for\ Powerline:h15
+" set guifont=Menlo\ Regular:h16
+" set guifont=Hack:h15
 " set guifont=Anonymous\ Pro:h17
 " set guifont=Inconsolata-dz:h17
 
@@ -198,9 +229,12 @@ set guioptions-=T
 " Syntax on
 syntax on
 
+set list listchars=tab:»·,trail:·
+
 if has("gui_running")
   set lines=57
   set columns=237
+  set colorcolumn=100
 
   " Highlight the line and the column of the current position of cursor
   set cursorline
@@ -213,9 +247,7 @@ if has("gui_running") || $TERM == "xterm-256color"
   set t_Co=256
   set background=dark " light
   let base16colorspace=256 " Access colors present in 256 colorspace
-  " colorscheme base16-default
-  "colorscheme base16-ocean
-  colorscheme monokai
+  colorscheme base16-ocean
 else
   let g:CSApprox_loaded = 0
 endif
@@ -230,17 +262,26 @@ function TrimWhiteSpace()
   ''
 :endfunction
 
-set list listchars=tab:»·,trail:·
-
-map <leader>= :call TrimWhiteSpace()<CR>
+map  <leader>= :call TrimWhiteSpace()<CR>
 map! <leader>= :call TrimWhiteSpace()<CR>
+
+" Adds space between hash content and braces
+function AddsSpaceBetweenHashContentAndBraces()
+  silent! s/{\([^ ]\)/{ \1/
+  silent! s/\([^ ]\)}/\1 }/
+  ''
+:endfunction
+
+map  <leader>{ :call AddsSpaceBetweenHashContentAndBraces()<CR>
+map! <leader>{ :call AddsSpaceBetweenHashContentAndBraces()<CR>
 
 " Collapse multiple blank lines (regardless of quantity) into a single blank line.
 function CollapseMultipleBlankLines()
   g/^\_$\n\_^$/d
   ''
 :endfunction
-map <leader>- :call CollapseMultipleBlankLines()<CR>
+
+map  <leader>- :call CollapseMultipleBlankLines()<CR>
 map! <leader>- :call CollapseMultipleBlankLines()<CR>
 
 " Invert lines
@@ -248,13 +289,16 @@ function InvertLines()
   g/^/m0
   ''
 :endfunction
+
 nnoremap <D-i> :call InvertLines()<cr>
 
-" Convert Ruby 1.8 to 1.9 Hash Syntax - http://robots.thoughtbot.com/convert-ruby-1-8-to-1-9-hash-syntax
+" Convert Ruby 1.8 to 1.9 Hash Syntax
+" http://robots.thoughtbot.com/convert-ruby-1-8-to-1-9-hash-syntax
 function ConvertRubyHashSyntax()
   %s/:\([^ ]*\)\(\s*\)=>/\1:/g
   ''
 :endfunction
+
 nnoremap <leader>h :call ConvertRubyHashSyntax()<cr>
 
 autocmd BufWritePre * :%s/\s\+$//e
@@ -330,6 +374,16 @@ endfunction
 :nnoremap <leader>d :RemoveAllFocusTags<CR>
 command! -nargs=0 RemoveAllFocusTags call s:RemoveAllFocusTags()
 
+function! UseSingleQuotes()
+  execute ":%s/\"/'/g"
+endfunction
+map <Leader>' :call UseSingleQuotes()<CR>
+
+function! UseDoubleQuotes()
+  execute ":%s/'/\"/g"
+endfunction
+map <Leader>" :call UseDoubleQuotes()<CR>
+
 function! OpenGemfile()
   if filereadable("Gemfile")
     execute ":tab drop Gemfile"
@@ -385,6 +439,9 @@ augroup END
 " ┌───────────────────────────────────┐
 " │             Shortcuts             │
 " └───────────────────────────────────┘
+
+"" Set working directory
+nnoremap <leader>. :lcd %:p:h<CR>
 
 " Ctrl+R reloads the ~/.vimrc file
 nnoremap <F12> :source ~/.vimrc
@@ -451,8 +508,19 @@ au BufNewFile,BufRead Vagrantfile  set filetype=ruby
 au BufNewFile,BufRead *.pp         set filetype=ruby
 au BufNewFile,BufRead *.prawn      set filetype=ruby
 au BufNewFile,BufRead Appraisals   set filetype=ruby
+au BufNewFile,BufRead Capfile      set filetype=ruby
+au BufNewFile,BufRead *.rabl       set filetype=ruby
 au BufNewFile,BufRead .psqlrc      set filetype=sql
 au BufNewFile,BufRead *.less       set filetype=css
 au BufNewFile,BufRead bash_profile set filetype=sh
-au BufNewFile,BufRead Capfile      set filetype=ruby
 au BufNewFile,BufRead *.hbs        set filetype=html
+
+" Git hooks
+au BufNewFile,BufRead applypatch-msg     set filetype=ruby
+au BufNewFile,BufRead commit-msg         set filetype=ruby
+au BufNewFile,BufRead post-update        set filetype=ruby
+au BufNewFile,BufRead pre-applypatch     set filetype=ruby
+au BufNewFile,BufRead pre-commit         set filetype=ruby
+au BufNewFile,BufRead pre-push           set filetype=ruby
+au BufNewFile,BufRead pre-rebase         set filetype=ruby
+au BufNewFile,BufRead prepare-commit-msg set filetype=ruby
