@@ -1,16 +1,45 @@
+snippet select
+	<%= select("post", "person_id", Person.all.collect { |p| [p.name, p.id] }, { include_blank:true } %>
+snippet f.text
+	<div class = "field">
+		<%= f.label :atributo %><br>
+		<%= f.text_field :atributo %>
+	</div>
+snippet f.area
+	<div class = "field">
+		<%= f.label :atributo %><br>
+		<%= f.text_area :atributo %>
+	</div>
+snippet f.time
+	<div class = "field">
+		<%= f.label :atributo %><br>
+		<%= f.time_select :atributo %>
+	</div>
+snippet f.date
+	<div class = "field">
+		<%= f.label :atributo %><br>
+		<%= f.date_select :atributo %>
+	</div>
+snippet f.check
+	<div class = "field">
+		<%= f.label :atributo %><br>
+		<%= f.check_box :atributo %>
+	</div>
+
+
 snippet -
 	<% ${1} %>${2}
 snippet =
 	<%= ${1} %>${2}
-snippet if
-	<% if ${1} %>
-snippet else
-	<% else %>
-snippet end
-	<% end %>
-snippet <
-	<${1:p}>${2}</$1>
-snippet .
+#snippet if
+#	<% if ${1} %>
+#snippet else
+#	<% else %>
+#snippet end
+#	<% end %>
+#snippet <
+#	<${1:p}>${2}</$1>
+snippet div.
 	<div class="${1}">${2}</div>
 snippet div
 	<div>${1}</div>
@@ -23,7 +52,7 @@ snippet fore
 ##########################
 #     Tables             #
 ##########################
-snippet table
+snippet table2
 	<div class="table-responsive">
 	  <table class="table">
 	    <thead>
@@ -842,7 +871,7 @@ snippet section#
 	<section id="${1}">
 		${0}
 	</section>
-snippet select
+snippet selecthtml
 	<select name="${1}" id="${2:$1}">
 		${0}
 	</select>
