@@ -17,31 +17,33 @@ call vundle#rc()
 
 Plugin 'gmarik/vundle'
 
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bling/vim-airline'
+"Plugin 'Lokaltog/vim-easymotion'
+Plugin 'easymotion/vim-easymotion' "Plugin de Movimentação dentro do texto
+Plugin 'airblade/vim-gitgutter' "Plugin de Visualização de linhas editadas no Git
+Plugin 'bling/vim-airline' "Barra de Ferramentas
 Plugin 'chriskempson/base16-vim'
-Plugin 'danro/rename.vim'
+Plugin 'danro/rename.vim' "Renomeia Arquivo
 Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'godlygeek/tabular'
+Plugin 'godlygeek/tabular' "Cria tabulações
 Plugin 'gorkunov/smartpairs.vim'
-Plugin 'henrik/vim-ruby-runner'
+Plugin 'henrik/vim-ruby-runner' "Roda um interpretador do Ruby dentro do Vim
 Plugin 'int3/vim-extradite'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'lilydjwg/colorizer'
 Plugin 'msanders/snipmate.vim'
-Plugin 'rking/ag.vim'
+Plugin 'rking/ag.vim' "Busca no projeto
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'terryma/vim-multiple-cursors'
+Plugin 'scrooloose/nerdtree' "Windows Explorer do Vim - Arvore de diretórios
+Plugin 'scrooloose/syntastic' "mostra erros
+Plugin 'terryma/vim-multiple-cursors' "Permite que várias regiões não contínuas sejam selecionadas
 Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-abolish' "Muda o padrão de escrita do código
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'vim-scripts/matchit.zip'
+"Plugin NERDCommenter -> 5.ci Comenta cinco linhas
 
 filetype plugin indent on
 
@@ -54,6 +56,22 @@ filetype plugin indent on
 " ┌───────────────────────────────────┐
 " │       Plugins customizations      │
 " └───────────────────────────────────┘
+"EasyMotion
+nmap s <Plug>(easymotion-s2)
+nmap <Leader> <Plug>(easymotion-sn)
+
+nmap t <Plug>(easymotion-t2)
+xmap <Leader>s <Plug>(easymotion-sn)
+omap <Leader>z <Plug>(easymotion-sn):set hlsearch
+"map / <Plug><easymotion-sn)
+"omap / <Plug>(easymotion-tn)
+
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
+map <Leader>j <Plug>(easymotion-j)
+
+let loaded_matchit = 1
+
 
 " NERDTree
 nmap <F2> :NERDTreeToggle<CR>
@@ -96,8 +114,8 @@ endif
 
 " CtrlP
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_working_path_mode = 2
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_working_path_mode = 0
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.cache
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.hg$\|\.svn$',
   \ 'file': '\.exe$\|\.so$\|\.dll$',
