@@ -1,3 +1,14 @@
+snippet migration
+	t.string :name, limit: 80
+	t.text :description
+	t.integer :age
+	t.boolean :admin
+	t.float :
+	t.decimal :
+	t.date :birthdate
+	t.time
+	t.datetime
+	t.timestamps
 snippet select
 	<%= select("post", "person_id", Person.all.collect { |p| [p.name, p.id] }, { include_blank:true } %>
 snippet f.text
