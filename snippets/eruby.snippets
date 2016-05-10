@@ -1,3 +1,11 @@
+snippet link_to
+	<%= link_to "${1}link text...", :action => "index" %>
+snippet form_tag
+		<%= form_tag(customers_path${1}, method: :get) %>
+snippet text_field_tag
+		<%= text_field_tag 'search', nil, placeholder: 'Enter search term . . .' %>
+snippet submit_tag
+		<%= submit_tag "Search" %>
 snippet migration
 	t.string :name, limit: 80
 	t.text :description
@@ -9,8 +17,17 @@ snippet migration
 	t.time
 	t.datetime
 	t.timestamps
-snippet select
-	<%= select("post", "person_id", Person.all.collect { |p| [p.name, p.id] }, { include_blank:true } %>
+snippet f.select
+		<div class = "field">
+			<%= f.label :sex${1} %>
+			<%= f.select(:sex, options_for_select([['Masculino', 'M'], ['Feminino', 'F']], @model.sex), { include_blank:true }) %>
+		</div>
+
+snippet f.collection
+		<div class = "field">
+			<%= f.label :father_id${1} %>
+			<%= f.collection_select(:father_id, @fathers, :id, :name, include_blank:true) %>
+		</div>
 snippet f.text
 	<div class = "field">
 		<%= f.label :atributo %><br>
@@ -83,9 +100,9 @@ snippet table2
 	  <table>
 	<div>
 snippet th
-	<th>$0</th>
+	<th>${1}</th>
 snippet td
-	<td><%= $0 %></td>
+	<td><%= ${1} %></td>
 ##########################
 #     Forms              #
 ##########################
@@ -711,7 +728,7 @@ snippet legend
 snippet legend+
 	<legend><span>${0}</span></legend>
 snippet li
-	<li>${0}</li>
+	<li>${1}</li>
 snippet li.
 	<li class="${1}">${0}</li>
 snippet li+
@@ -980,7 +997,7 @@ snippet track
 	<track src="${1}" srclang="${2}" label="${3}" default="${4:default}>${5}</track>
 snippet ul
 	<ul>
-		${0}
+		${1}
 	</ul>
 snippet ul.
 	<ul class="${1}">
